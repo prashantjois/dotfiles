@@ -1,0 +1,68 @@
+#!/bin/bash
+
+export TERM=xterm-256color
+export EDITOR=vim
+# Undocumented feature which sets the size to "unlimited".
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTTIMEFORMAT="[%F %T] "
+# Change the file location because certain bash sessions truncate .bash_history file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.bash_eternal_history
+
+
+alias vi='vim -p'
+alias which='type -a'
+alias ..='cd ..'
+
+
+extract () {
+     if [ -f $1 ] ; then
+         case $1 in
+             *.tar.bz2)   tar xjf $1        ;;
+             *.tar.gz)    tar xzf $1     ;;
+             *.bz2)       bunzip2 $1       ;;
+             *.rar)       rar x $1     ;;
+             *.gz)        gunzip $1     ;;
+             *.tar)       tar xf $1        ;;
+             *.tbz2)      tar xjf $1      ;;
+             *.tgz)       tar xzf $1       ;;
+             *.zip)       unzip $1     ;;
+             *.Z)         uncompress $1  ;;
+             *.7z)        7z x $1    ;;
+             *)           echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+up() {
+     local _levels=$1
+     if [ ! -z "$_levels" ] && [ $_levels -gt 0 ] && [ $_levels -lt 1000 ]
+     then
+          local _cmd=".."
+          for (( i=1 ; i<$_levels ; i++ ))
+          do
+               _cmd="$_cmd/.."
+          done
+          cd $_cmd
+     fi
+}
+
+# Creates an archive (*.tar.gz) from given directory.
+function maketgz() { 
+     if [ ! -z "$1" ]
+     then
+          tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
+     fi
+}
+
+# Create a ZIP archive of a file or folder.
+function makezip() { 
+     if [ ! -z "$1" ]
+     then
+          zip -r "${1%%/}.zip" "$1" ; 
+     fi
+}
