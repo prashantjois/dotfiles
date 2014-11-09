@@ -1,0 +1,9 @@
+#!/bin/sh
+
+SRC=$(dirname $(readlink -e $0))
+
+ln -s "$SRC/.vim" "$HOME/.vim"
+ln -s "$SRC/.vimrc" "$HOME/.vimrc"
+ln -s "$SRC/.bash_settings" "$HOME/.bash_settings"
+
+echo "source \"$HOME/.bash_settings\"" >> "$HOME/.bashrc"
