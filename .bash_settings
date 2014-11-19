@@ -11,11 +11,22 @@ export HISTTIMEFORMAT="[%F %T] "
 # http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
 export HISTFILE=~/.bash_eternal_history
 
-
-alias vi='vim -p'
 alias which='type -a'
-alias ..='cd ..'
+# open vim in tab mode
+alias vi='vim -p'
 
+# navigation helpers
+alias ..='cd ..'
+alias ...='cd ...'
+alias ....='cd ....'
+
+# docker aliases
+alias d='docker'
+alias de='docker-enter'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias drma='docker ps -aq | xargs docker rm'
+alias drmin="docker images | grep '<none>' | awk '{ print \$3 }' | grep -v IMAGE | xargs docker rmi"
 
 extract () {
      if [ -f $1 ] ; then
