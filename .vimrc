@@ -5,7 +5,6 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 set number 		" Show line numbers
-set cursorline		" higlight the cursor line
 set pastetoggle=<F2>    " Set paste mode toggle key
 set showcmd 		" show incomplete commands
 set scrolloff=5 	" lines to keep when scrolling
