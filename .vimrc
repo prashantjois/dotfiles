@@ -49,7 +49,8 @@ nnoremap <C-t> :tabnew<CR>:NERDTree<CR>
 " CTRL-P
 nnoremap <Leader>o :CtrlP<CR>
 
-" Monokai colorscheme
+" colorscheme
+let g:zenburn_transparent = 1
 colorscheme zenburn
 
 " NERDTree Directory Browsing
