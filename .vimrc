@@ -15,8 +15,7 @@ set wrap                        " wrap text when displaying (does not alter the 
 set expandtab                   " (insert) insert space whenever a tab key is pressed
 set tabstop=2                   " (insert) number of spaces in a tab
 set shiftwidth=2                " (insert) number of spaces characters used for indentation
-set autoindent                  " (insert) copy indent from current line when going to next line
-set smartindent                 " (insert) smart indenting mode
+set autoindent                  " (insert) copy indent from current line when going to next line set smartindent                 " (insert) smart indenting mode
 set nocindent                   " (insert) do not use cindent indenting mode
 set hlsearch                    " (normal) highlight search terms
 set incsearch                   " (normal) show found search term as you type
@@ -25,6 +24,8 @@ let mapleader = "\<Space>"      " (normal) map leader to space bar
 
 " Type <Space>w to save file
 nnoremap <Leader>w :w<CR>
+" Type <Space>q to quit
+nnoremap <Leader>q :q<CR>
 
 " Automatically jump to end of text you pasted
 vnoremap <silent> y y`]
@@ -48,9 +49,9 @@ nnoremap <C-t> :tabnew<CR>:NERDTree<CR>
 
 " CTRL-P
 nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>i :CtrlPTag<CR>
 
-" colorscheme
-let g:zenburn_transparent = 1
+
 colorscheme zenburn
 
 " NERDTree Directory Browsing
@@ -68,3 +69,35 @@ nmap <F5> :GundoToggle<CR>
 " Expand Region
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+
+" Use ag instead of grep if available
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap <Leader>p :Ag<SPACE>
+
+" Toggle quickfix list
+nmap <script> <silent> <leader>e :copen<CR>
+nmap <script> <silent> <leader>e :copen<CR>
+
+" Open quickfix in new tab
+set switchbuf+=usetab,newtab
+
+" matchit plugin for texobj-rubyblock
+runtime macros/matchit.vim
+
+" vim rspec
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>s :call RunCurrentSpecFile()<CR>
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
