@@ -88,7 +88,6 @@ nnoremap <Leader>p :Ag<SPACE>
 
 " Toggle quickfix list
 nmap <script> <silent> <leader>e :copen<CR>
-nmap <script> <silent> <leader>e :copen<CR>
 
 " Open quickfix in new tab
 set switchbuf+=usetab,newtab
@@ -117,3 +116,4 @@ if has('persistent_undo')
     let &undodir = myUndoDir
     set undofile
 endif
+
