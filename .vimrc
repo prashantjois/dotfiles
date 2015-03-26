@@ -52,6 +52,8 @@ nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>i :CtrlPTag<CR>
 
 
+" Zenburn colorscheme
+let g:zenburn_transparent = 1
 colorscheme zenburn
 
 " NERDTree Directory Browsing
@@ -96,8 +98,22 @@ runtime macros/matchit.vim
 
 " vim rspec
 nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>s :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
 
 " Make it obvious where 80 characters is
 set textwidth=80
 set colorcolumn=+1
+
+" persistent undo
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+endif

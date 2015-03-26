@@ -77,3 +77,10 @@ function makezip() {
           zip -r "${1%%/}.zip" "$1" ; 
      fi
 }
+
+function merge() { 
+    str=
+    while read line; do str="$str $line"; done
+    echo $str
+}
+
