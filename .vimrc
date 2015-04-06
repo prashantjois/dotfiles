@@ -51,7 +51,6 @@ nnoremap <C-t> :tabnew<CR>:NERDTree<CR>
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>i :CtrlPTag<CR>
 
-
 " Zenburn colorscheme
 let g:zenburn_transparent = 1
 colorscheme zenburn
@@ -100,7 +99,6 @@ nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
 
 " Make it obvious where 80 characters is
-set textwidth=80
 set colorcolumn=+1
 
 " persistent undo
@@ -117,3 +115,5 @@ if has('persistent_undo')
     set undofile
 endif
 
+" Respect terminal transparency
+hi Normal ctermbg=none
