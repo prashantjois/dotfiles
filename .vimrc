@@ -117,3 +117,6 @@ endif
 
 " Respect terminal transparency
 hi Normal ctermbg=none
+
+" Open tag in new tab
+:nnoremap <silent><Leader>c <C-w><C-]><C-w>T
