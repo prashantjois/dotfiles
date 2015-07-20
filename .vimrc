@@ -82,12 +82,10 @@ endif
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap <Leader>p :Ag<SPACE>
 
 " Toggle quickfix list
 nmap <script> <silent> <leader>e :copen<CR>
-
 " Open quickfix in new tab
 set switchbuf+=usetab,newtab
 
@@ -114,9 +112,6 @@ if has('persistent_undo')
     let &undodir = myUndoDir
     set undofile
 endif
-
-" Respect terminal transparency
-hi Normal ctermbg=none
 
 " Open tag in new tab
 :nnoremap <silent><Leader>c <C-w><C-]><C-w>T
