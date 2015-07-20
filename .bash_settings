@@ -38,6 +38,7 @@ alias gc='git commit -m'
 alias ga='git add'
 alias gp='git push origin'
 alias gco='git checkout'
+alias gb='git branch'
 
 extract () {
      if [ -f $1 ] ; then
