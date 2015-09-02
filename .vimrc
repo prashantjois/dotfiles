@@ -115,3 +115,11 @@ endif
 
 " Open tag in new tab
 :nnoremap <silent><Leader>c <C-w><C-]><C-w>T
+
+" very magic regex by default
+nnoremap / /\v
+vnoremap / /\v
+cnoremap %s/ %smagic/
+cnoremap \>s/ \>smagic/
+nnoremap :g/ :g/\v
+nnoremap :g// :g//
