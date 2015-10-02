@@ -10,6 +10,7 @@ set showcmd 		" show incomplete commands
 set scrolloff=5 	" lines to keep when scrolling
 set title                       " show title in console title bar
 set wrap                        " wrap text when displaying (does not alter the line)
+set encoding=utf-8              " self-explanatory
 
 " Editing Options
 set expandtab                   " (insert) insert space whenever a tab key is pressed
@@ -21,6 +22,9 @@ set hlsearch                    " (normal) highlight search terms
 set incsearch                   " (normal) show found search term as you type
 set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
 let mapleader = "\<Space>"      " (normal) map leader to space bar
+
+" jk to escape into normal mode
+inoremap jk <ESC>
 
 " Type <Space>w to save file
 nnoremap <Leader>w :w<CR>
@@ -80,14 +84,6 @@ endif
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
-" bind \ (backward slash) to grep shortcut
-nnoremap <Leader>p :Ag<SPACE>
-
-" Toggle quickfix list
-nmap <script> <silent> <leader>e :copen<CR>
-" Open quickfix in new tab
-set switchbuf+=usetab,newtab
 
 " matchit plugin for texobj-rubyblock
 runtime macros/matchit.vim
