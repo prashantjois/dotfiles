@@ -37,6 +37,22 @@ alias gd='git diff'
 alias gc='git commit -m'
 alias ga='git add'
 alias gp='git push origin'
+alias gco='git checkout'
+alias gb='git branch'
+
+# rails 
+alias mig='rake db:migrate'
+alias migt='rake db:migrate RAILS_ENV=test'
+
+back() {
+    local _steps=${1:-1}
+    rake db:rollback STEP=$_steps
+}
+
+backt() {
+    local _steps=${1:-1}
+    rake db:rollback RAILS_ENV=test STEP=$_steps
+}
 
 extract () {
      if [ -f $1 ] ; then
