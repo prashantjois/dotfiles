@@ -111,3 +111,8 @@ endif
 
 " Open tag in new tab
 :nnoremap <silent><Leader>c <C-w><C-]><C-w>T
+
+" Snipmate aliases
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['ruby'] = 'ruby,rails'
