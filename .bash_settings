@@ -41,6 +41,7 @@ alias gco='git checkout'
 alias gb='git branch'
 
 # rails 
+alias s='rails s -b 0.0.0.0'
 alias mig='rake db:migrate'
 alias migt='rake db:migrate RAILS_ENV=test'
 
