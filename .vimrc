@@ -4,6 +4,7 @@ execute pathogen#infect()
 " Display Options
 syntax on
 filetype plugin indent on
+set re=1      " This fixes the problem with slowness in ruby syntax highligting http://stackoverflow.com/a/16920294/1464892
 set number 		" Show line numbers
 set pastetoggle=<F2>    " Set paste mode toggle key
 set showcmd 		" show incomplete commands
@@ -22,6 +23,7 @@ set hlsearch                    " (normal) highlight search terms
 set incsearch                   " (normal) show found search term as you type
 set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
 let mapleader = "\<Space>"      " (normal) map leader to space bar
+let g:ruby_path="/usr/local/bin/ruby"
 
 " jk to escape into normal mode
 inoremap jk <ESC>
