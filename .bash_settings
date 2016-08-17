@@ -13,8 +13,8 @@ export HISTFILE=~/.bash_eternal_history
 
 alias which='type -a'
 alias g='grep -ERI'
-# open vim in tab mode
-alias vi='vim -p'
+# open neovim in tab mode
+alias vi='nvim -p'
 
 # navigation helpers
 alias ..='cd ..'
