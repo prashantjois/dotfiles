@@ -4,8 +4,9 @@ Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'jnurmine/Zenburn'
 Plug 'easymotion/vim-easymotion'
-Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
 Plug 'thoughtbot/vim-rspec'
+Plug 'slim-template/vim-slim'
 call plug#end()
 
 syntax on                       " enable syntax highlighting
@@ -16,6 +17,8 @@ set showcmd 		                " show incomplete commands
 set scrolloff=5                 " lines to keep when scrolling
 set wrap                        " wrap text when displaying (does not alter the line)
 set showmatch                   " show matching parentheses
+set undofile                    " preserve undo on exit
+set mouse-=a                    " prevent the behaviour where selecting text enters visual mode
 set expandtab                   " (insert) insert space whenever a tab key is pressed
 set tabstop=2                   " (insert) number of spaces in a tab
 set shiftwidth=2                " (insert) number of spaces characters used for indentation
@@ -66,9 +69,14 @@ nnoremap <leader>a :Ack!<space>
 " CTRL-P
 nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>i :CtrlPTag<CR>
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Use comma in normal mode to perform bi-directional easymotion
 nmap , <Plug>(easymotion-bd-w)
 
 " Open tag in new tab
 :nnoremap <silent><Leader>c <C-w><C-]><C-w>T
+
+" vim rspec
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
