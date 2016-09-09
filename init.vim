@@ -18,7 +18,6 @@ set scrolloff=5                 " lines to keep when scrolling
 set wrap                        " wrap text when displaying (does not alter the line)
 set showmatch                   " show matching parentheses
 set undofile                    " preserve undo on exit
-set mouse-=a                    " prevent the behaviour where selecting text enters visual mode
 set expandtab                   " (insert) insert space whenever a tab key is pressed
 set tabstop=2                   " (insert) number of spaces in a tab
 set shiftwidth=2                " (insert) number of spaces characters used for indentation
@@ -28,9 +27,10 @@ set hlsearch                    " (normal) highlight search terms
 set incsearch                   " (normal) show found search term as you type
 set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
 set wildmenu                    " (normal) menu autocomplete
+set mouse-=a
 
 let mapleader = "\<Space>"      " (normal) map leader to space bar
-let g:ruby_path="/usr/bin/ruby" "
+let g:ruby_path="/usr/bin/ruby" "j
 
 " Zenburn colorscheme
 let g:zenburn_transparent = 1
@@ -47,6 +47,8 @@ nnoremap <Leader>q :q<CR>
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
+" allow the . to execute once for each line of a visual selection
+vnoremap . :normal .<CR>
 
 " Stop that stupid window from popping up
 map q: :q

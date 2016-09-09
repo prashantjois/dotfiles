@@ -6,7 +6,6 @@ syntax on
 filetype plugin indent on
 set re=1      " This fixes the problem with slowness in ruby syntax highligting http://stackoverflow.com/a/16920294/1464892
 set number 		" Show line numbers
-set pastetoggle=<F2>    " Set paste mode toggle key
 set showcmd 		" show incomplete commands
 set scrolloff=5 	" lines to keep when scrolling
 set wrap                        " wrap text when displaying (does not alter the line)
@@ -16,11 +15,12 @@ set encoding=utf-8              " self-explanatory
 set expandtab                   " (insert) insert space whenever a tab key is pressed
 set tabstop=2                   " (insert) number of spaces in a tab
 set shiftwidth=2                " (insert) number of spaces characters used for indentation
-set autoindent                  " (insert) copy indent from current line when going to next line set smartindent                 " (insert) smart indenting mode
+set autoindent                  " (insert) copy indent from current line when going to next line set smartindent
 set nocindent                   " (insert) do not use cindent indenting mode
 set hlsearch                    " (normal) highlight search terms
 set incsearch                   " (normal) show found search term as you type
 set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
+
 let mapleader = "\<Space>"      " (normal) map leader to space bar
 let g:ruby_path="/usr/local/bin/ruby"
 
@@ -50,7 +50,6 @@ endif
 " Global Mappings
 nnoremap t :tabnext<CR>
 nnoremap T :tabprev<CR>
-nnoremap <C-t> :tabnew<CR>:NERDTree<CR>
 
 " CTRL-P
 nnoremap <Leader>o :CtrlP<CR>
@@ -60,17 +59,9 @@ nnoremap <Leader>i :CtrlPTag<CR>
 let g:zenburn_transparent = 1
 colorscheme zenburn
 
-" NERDTree Directory Browsing
-let NERDTreeDirArrows=0
-let NERDTreeQuitOnOpen=1
-map <C-n> :NERDTreeToggle<CR>	
-
 " VIM Airline status bar
 let g:airline_powerline_fonts = 1
 set laststatus=2
-
-" Gundo mapping
-nmap <F5> :GundoToggle<CR>
 
 " Expand Region
 vmap v <Plug>(expand_region_expand)
