@@ -7,6 +7,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tomtom/tcomment_vim'
 Plug 'thoughtbot/vim-rspec'
 Plug 'slim-template/vim-slim'
+Plug 'kchmck/vim-coffee-script'
 call plug#end()
 
 syntax on                       " enable syntax highlighting
