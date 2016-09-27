@@ -63,6 +63,7 @@ alias gco='git checkout'
 
 # rails 
 alias s='rails s -b 0.0.0.0'
+alias r='bundle exec rspec'
 alias mig='bundle exec rake db:migrate'
 alias migt='bundle exec rake db:migrate RAILS_ENV=test'
 
