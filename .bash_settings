@@ -15,7 +15,7 @@ alias which='type -a'
 alias g='grep -ERI'
 # open neovim in tab mode
 alias vi='nvim -p'
-alias rmswp='find ~/.local/share/nvim/swap/ -exec rm {} \;'
+alias rmswp='find ~/.local/share/nvim/swap/ -type f -exec rm {} \;'
 
 # navigation helpers
 alias ..='cd ..'
