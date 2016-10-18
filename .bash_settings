@@ -43,6 +43,8 @@ alias gb='git branch'
 alias gbcur="git status 2>&1 | head -n 1 | sed s'/On branch //g'"
 alias gp='git push origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gr='git pull origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
+alias gf='git fetch -a'
+
 gcob() {
     local _branch=$1
 
