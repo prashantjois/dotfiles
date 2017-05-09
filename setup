@@ -21,3 +21,7 @@ if [ ! -f "$HOME/.bash_settings" ]; then
 fi
 
 echo "source \"$HOME/.bash_settings\"" >> "$HOME/.bashrc"
+
+if [ ! -f "$HOME/.gitconfig" ]; then
+    ln -s "$SRC/.gitconfig" "$HOME/.bash_settings"
+fi
