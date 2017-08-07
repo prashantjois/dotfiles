@@ -1,0 +1,102 @@
+call plug#begin('~/.vim/plugged')
+
+" Colour Schemes
+Plug 'jnurmine/Zenburn'
+
+" Quick file navigation
+Plug 'kien/ctrlp.vim'
+
+" Allows you to quickly move to different parts of the file
+Plug 'easymotion/vim-easymotion'
+
+" Provides insert mode auto-completion for quotes, parens, brackets, etc.
+Plug 'Raimondi/delimitMate'
+
+" Comment shortchuts
+Plug 'tomtom/tcomment_vim'
+
+" Shows git commentary on the side
+Plug 'airblade/vim-gitgutter'
+
+" Language packs 
+Plug 'sheerun/vim-polyglot'
+
+"
+" Ruby plugins
+" 
+Plug 'vim-scripts/ruby-matchit'  " Linter
+Plug 'ngmy/vim-rubocop'          " Auto-complete 'end'
+Plug 'tpope/vim-endwise'         " intelligently add 'end'
+Plug 'thoughtbot/vim-rspec'      " Run rspec from vim
+Plug 'slim-template/vim-slim'    " Slim template syntax highlighting
+Plug 'kchmck/vim-coffee-script'  " Coffeescript syntax higlighting
+
+call plug#end()
+
+syntax on                       " enable syntax highlighting
+filetype plugin indent on       " indentation based on file type
+set re=1                        " This fixes the problem with slowness in ruby syntax highlighting http://stackoverflow.com/a/16920294/1464892
+set number 		                  " Show line numbers
+set showcmd 		                " show incomplete commands
+set scrolloff=5                 " lines to keep when scrolling
+set wrap                        " wrap text when displaying (does not alter the line)
+set showmatch                   " show matching parentheses
+set undofile                    " preserve undo on exit
+set expandtab                   " (insert) insert space whenever a tab key is pressed
+set tabstop=2                   " (insert) number of spaces in a tab
+set shiftwidth=2                " (insert) number of spaces characters used for indentation
+set autoindent                  " (insert) copy indent from current line when going to next line set smartindent
+set nocindent                   " (insert) do not use cindent indenting mode
+set hlsearch                    " (normal) highlight search terms
+set incsearch                   " (normal) show found search term as you type
+set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
+set wildmenu                    " (normal) menu autocomplete
+set mouse-=a
+
+let mapleader = "\<Space>"      " (normal) map leader to space bar
+
+" Stop that stupid window from popping up
+map q: :q
+
+" jk to escape into normal mode
+inoremap jk <ESC>
+" Type <Space>w to save file
+nnoremap <Leader>w :w<CR>
+" Type <Space>q to quit
+nnoremap <Leader>q :q<CR>
+
+" Automatically jump to end of text you pasted
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
+" allow the . to execute once for each line of a visual selection
+vnoremap . :normal .<CR>
+
+" Global Mappings
+nnoremap t :tabnext<CR>
+nnoremap T :tabprev<CR>
+
+" CTRL-P
+nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>i :CtrlPTag<CR>
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" Use comma in normal mode to perform bi-directional easymotion
+nmap , <Plug>(easymotion-bd-w)
+
+" Open tag in new tab
+:nnoremap <silent><Leader>c <C-w><C-]><C-w>T
+
+" vim rspec
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
+
+" Zenburn colorscheme
+let g:zenburn_transparent = 1
+colorscheme zenburn
+
+set nocompatible
+if has("autocmd")
+  filetype indent plugin on
+endif
