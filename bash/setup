@@ -1,0 +1,5 @@
+#!/bin/bash
+
+SRC=$(dirname $(readlink -e $0))
+ln -s "${SRC}/bash_settings" ~/.bash_settings
+echo "source ~/.bash_settings" >> ~/.bashrc

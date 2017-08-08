@@ -13,9 +13,9 @@ export HISTFILE=~/.bash_eternal_history
 
 alias which='type -a'
 alias g='grep -ERI'
-# open neovim in tab mode
-alias vi='nvim -p'
-alias rmswp='find ~/.local/share/nvim/swap/ -type f -exec rm {} \;'
+# open vim in tab mode
+alias vi='vim -p'
+alias rmswp='find . -name ".*swp" -exec rm {} \;'
 
 # navigation helpers
 alias ..='cd ..'
@@ -44,24 +44,6 @@ alias gbcur="git status 2>&1 | head -n 1 | sed s'/On branch //g'"
 alias gp='git push origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gr='git pull origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gf='git fetch -a'
-
-gcob() {
-    local _branch=$1
-
-    local _count=$(git branch | grep "$_branch" | wc -l)
-    if [[ $_count -eq 0 ]]; then
-        echo "branch not found"
-    elif [[ $_count -gt 1 ]]; then
-        echo "found multiple branches that match"
-        git branch | grep "$_branch"
-    else
-        local _full_branch=$(git branch | grep "$_branch")
-        echo "git checkout ${_full_branch:1}"
-        git checkout ${_full_branch:1}
-        git status 2>&1 | head -n 1
-    fi
-}
-
 alias gco='git checkout'
 
 # rails 
