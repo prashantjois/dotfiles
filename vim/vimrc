@@ -28,8 +28,14 @@ Plug 'vim-scripts/ruby-matchit'  " Linter
 Plug 'ngmy/vim-rubocop'          " Auto-complete 'end'
 Plug 'tpope/vim-endwise'         " intelligently add 'end'
 Plug 'thoughtbot/vim-rspec'      " Run rspec from vim
+Plug 'tmhedberg/matchit'       " 
+
+" Syntax highlighting
 Plug 'slim-template/vim-slim'    " Slim template syntax highlighting
 Plug 'kchmck/vim-coffee-script'  " Coffeescript syntax higlighting
+Plug 'othree/html5.vim'          " HTML syntax highlighting
+Plug 'mustache/vim-mustache-handlebars' " Handlebars syntax higlighting
+Plug 'jelera/vim-javascript-syntax' " Javascript syntax highlighting
 
 call plug#end()
 
