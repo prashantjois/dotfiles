@@ -81,6 +81,7 @@ nnoremap vv viw
 
 " Create a new file in cwd instead of at root of vim process
 nnoremap :e :e %:h/
+nnoremap :tabe :tabe %:h/
 
 " CTRL-P
 nnoremap <Leader>o :CtrlPCurWD<CR>
