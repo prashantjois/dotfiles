@@ -19,6 +19,7 @@ Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'        " Snippets are separated from the engine
 Plug 'danro/rename.vim'          " rename files within cwd
 Plug 'scrooloose/nerdtree'       " directory navigation
+Plug 'vim-airline/vim-airline'   " better statusline
 
 " Syntax highlighting
 Plug 'slim-template/vim-slim'    " Rails Slim template 
