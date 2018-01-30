@@ -13,8 +13,12 @@ Plug 'tpope/vim-endwise'         " intelligently add 'end'
 Plug 'thoughtbot/vim-rspec'      " Run rspec from vim
 Plug 'tmhedberg/matchit'         " Advanced bracket matching
 Plug 'brookhong/ag.vim'          " grep alternative (silver searcher)
-Plug 'SirVer/ultisnips'          " Snippets engine
-Plug 'honza/vim-snippets'      " Snippets are separated from the engine
+Plug 'MarcWeber/vim-addon-mw-utils' " Snippets engine
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'        " Snippets are separated from the engine
+Plug 'danro/rename.vim'          " rename files within cwd
+Plug 'scrooloose/nerdtree'       " directory navigation
 
 " Syntax highlighting
 Plug 'slim-template/vim-slim'    " Rails Slim template 
@@ -47,7 +51,6 @@ set incsearch                   " (normal) show found search term as you type
 set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
 set wildmenu                    " (normal) menu autocomplete
 
-
 let mapleader = "\<Space>"      " (normal) map leader to space bar
 
 " Stop that stupid window from popping up
@@ -68,9 +71,15 @@ nnoremap <silent> p p`]
 " allow the . to execute once for each line of a visual selection
 vnoremap . :normal .<CR>
 
-" Global Mappings
+" Tab shortcuts
 nnoremap t :tabnext<CR>
 nnoremap T :tabprev<CR>
+
+" Select word easily
+nnoremap vv viw
+
+" Create a new file in cwd instead of at root of vim process
+nnoremap :e :e %:h/
 
 " CTRL-P
 nnoremap <Leader>o :CtrlPCurWD<CR>
@@ -109,9 +118,14 @@ if has("autocmd")
   filetype indent plugin on
 endif
 
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" Snippet trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+" NerdTree 
+" open NERDTree automatically when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
