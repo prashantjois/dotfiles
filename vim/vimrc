@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'jnurmine/Zenburn'          " Colour Scheme
 Plug 'kien/ctrlp.vim'            " Fuzzy file search
 Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
-Plug 'Raimondi/delimitMate'      " Provides insert mode auto-completion for quotes, parens, etc.
 Plug 'tomtom/tcomment_vim'       " Comment shortchuts
 Plug 'airblade/vim-gitgutter'    " Shows git commentary on the side
 Plug 'sheerun/vim-polyglot'      " Language packs 
@@ -20,6 +19,7 @@ Plug 'honza/vim-snippets'        " Snippets are separated from the engine
 Plug 'danro/rename.vim'          " rename files within cwd
 Plug 'scrooloose/nerdtree'       " directory navigation
 Plug 'vim-airline/vim-airline'   " better statusline
+Plug 'terryma/vim-expand-region' " visually select regions
 
 " Syntax highlighting
 Plug 'slim-template/vim-slim'    " Rails Slim template 
@@ -79,6 +79,9 @@ nnoremap T :tabprev<CR>
 " Select word easily
 nnoremap vv viw
 
+" Search and replace visually selected text
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 " Create a new file in cwd instead of at root of vim process
 nnoremap :e :e %:h/
 nnoremap :tabe :tabe %:h/
@@ -131,3 +134,4 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+
