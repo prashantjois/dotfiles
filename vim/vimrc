@@ -20,6 +20,8 @@ Plug 'danro/rename.vim'          " rename files within cwd
 Plug 'scrooloose/nerdtree'       " directory navigation
 Plug 'vim-airline/vim-airline'   " better statusline
 Plug 'terryma/vim-expand-region' " visually select regions
+Plug 'jgdavey/tslime.vim'        " Tmux integration
+Plug 'ervandew/supertab'         " auto-completion with tab
 
 " Syntax highlighting
 Plug 'slim-template/vim-slim'    " Rails Slim template 
@@ -83,8 +85,7 @@ nnoremap vv viw
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " Create a new file in cwd instead of at root of vim process
-nnoremap :e :e %:h/
-nnoremap :tabe :tabe %:h/
+nnoremap <C-T> :tabe %:h/
 
 " CTRL-P
 nnoremap <Leader>o :CtrlPCurWD<CR>
@@ -92,7 +93,7 @@ nnoremap <Leader>i :CtrlPTag<CR>
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Quick search prompt
-nnoremap <Leader>g :Ag 
+nnoremap <Leader>g :Ag!
 
 " bind K to grep word under cursor
 if executable('ag')
@@ -111,8 +112,9 @@ nmap , <Plug>(easymotion-bd-w)
 :nnoremap <silent><Leader>c <C-w><C-]><C-w>T
 
 " vim rspec
-nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
+
+autocmd Filetype ruby nnoremap <Leader>s :call RunNearestSpec()<CR>
+autocmd Filetype ruby nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
 
 " Zenburn colorscheme
 let g:zenburn_transparent = 1
@@ -134,4 +136,3 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
-
