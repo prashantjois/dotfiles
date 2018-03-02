@@ -53,7 +53,9 @@ set autoindent                  " (insert) copy indent from current line when go
 set smartindent                 " (insert) smart autoindenting when starting a new line
 set nocindent                   " (insert) do not use cindent indenting mode
 set hlsearch                    " (normal) highlight search terms
-set incsearch                   " (normal) show found search term as you type
+set incsearch                   " (normal) show found search term as you type (emacs style)
+set ignorecase                  " (normal) case-insensitve search
+set smartcase                   " (normal) make searches case-insensitive except when you include upper-case characters
 set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
 set wildmenu                    " (normal) menu autocomplete
 
@@ -77,9 +79,13 @@ nnoremap <silent> p p`]
 " allow the . to execute once for each line of a visual selection
 vnoremap . :normal .<CR>
 
-" Tab shortcuts
-nnoremap t :tabnext<CR>
-nnoremap T :tabprev<CR>
+" Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" Buffer shortcuts
+nnoremap t :bn<CR>
+nnoremap T :tp<CR>
 
 " Select word easily
 nnoremap vv viw
@@ -88,11 +94,12 @@ nnoremap vv viw
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " Create a new file in cwd instead of at root of vim process
-nnoremap <C-T> :tabe %:h/
+nnoremap <C-T> :e %:h/
 
 " CTRL-P
 nnoremap <Leader>o :CtrlPCurWD<CR>
 nnoremap <Leader>i :CtrlPTag<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 if executable('ag')
@@ -114,9 +121,6 @@ vnoremap // y/<C-R>"<CR>
 
 " Use comma in normal mode to perform bi-directional easymotion
 nmap , <Plug>(easymotion-bd-w)
-
-" Open tag in new tab
-:nnoremap <silent><Leader>c <C-w><C-]><C-w>T
 
 " vim rspec
 autocmd Filetype ruby nnoremap <Leader>s :call RunNearestSpec()<CR>
