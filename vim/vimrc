@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'kien/ctrlp.vim'            " Fuzzy file search Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
+Plug 'kien/ctrlp.vim'            " Fuzzy file search
+Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
 Plug 'tomtom/tcomment_vim'       " Comment shortchuts
 Plug 'airblade/vim-gitgutter'    " Shows git commentary on the side
 Plug 'sheerun/vim-polyglot'      " Language packs
@@ -153,3 +154,5 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+source ~/.square.vim
