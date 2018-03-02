@@ -1,11 +1,9 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'jnurmine/Zenburn'          " Colour Scheme
-Plug 'kien/ctrlp.vim'            " Fuzzy file search
-Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
+Plug 'kien/ctrlp.vim'            " Fuzzy file search Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
 Plug 'tomtom/tcomment_vim'       " Comment shortchuts
 Plug 'airblade/vim-gitgutter'    " Shows git commentary on the side
-Plug 'sheerun/vim-polyglot'      " Language packs 
+Plug 'sheerun/vim-polyglot'      " Language packs
 Plug 'vim-scripts/ruby-matchit'  " Linter
 Plug 'ngmy/vim-rubocop'          " Auto-complete 'end'
 Plug 'tpope/vim-endwise'         " intelligently add 'end'
@@ -22,11 +20,15 @@ Plug 'vim-airline/vim-airline'   " better statusline
 Plug 'terryma/vim-expand-region' " visually select regions
 Plug 'jgdavey/tslime.vim'        " Tmux integration
 Plug 'ervandew/supertab'         " auto-completion with tab
+Plug 'vim-syntastic/syntastic'   " linter
+
+" Colourschemes
+Plug 'jnurmine/Zenburn'
 
 " Syntax highlighting
-Plug 'slim-template/vim-slim'    " Rails Slim template 
-Plug 'kchmck/vim-coffee-script'  " Coffeescript 
-Plug 'othree/html5.vim'          " HTML 
+Plug 'slim-template/vim-slim'    " Rails Slim template
+Plug 'kchmck/vim-coffee-script'  " Coffeescript
+Plug 'othree/html5.vim'          " HTML
 Plug 'mustache/vim-mustache-handlebars' " Handlebars (ember.js)
 Plug 'jelera/vim-javascript-syntax' " Javascript
 
@@ -34,9 +36,9 @@ call plug#end()
 
 syntax on                       " enable syntax highlighting
 filetype plugin indent on       " indentation based on file type
-set re=1                        " This fixes the problem with slowness in ruby syntax highlighting 
-set number 		                  " Show line numbers
-set showcmd 		                " show incomplete commands
+set re=1                        " This fixes the problem with slowness in ruby syntax highlighting
+set number                      " Show line numbers
+set showcmd                     " show incomplete commands
 set scrolloff=5                 " lines to keep when scrolling
 set wrap                        " wrap text when displaying (does not alter the line)
 set showmatch                   " show matching parentheses
@@ -46,7 +48,7 @@ set clipboard=unnamed           " allow yank and paste from clipboard if availab
 set expandtab                   " (insert) insert space whenever a tab key is pressed
 set tabstop=2                   " (insert) number of spaces in a tab
 set shiftwidth=2                " (insert) number of spaces characters used for indentation
-set autoindent                  " (insert) copy indent from current line when going to next line 
+set autoindent                  " (insert) copy indent from current line when going to next line
 set smartindent                 " (insert) smart autoindenting when starting a new line
 set nocindent                   " (insert) do not use cindent indenting mode
 set hlsearch                    " (normal) highlight search terms
@@ -92,9 +94,6 @@ nnoremap <Leader>o :CtrlPCurWD<CR>
 nnoremap <Leader>i :CtrlPTag<CR>
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-" Quick search prompt
-nnoremap <Leader>g :Ag! 
-
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -103,10 +102,12 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+" Quick search prompt
+nnoremap <Leader>g :Ag! 
+" bind visual mode <leader>g to grep selected text
+vnoremap <Leader>g y:Ag! <C-R>"
 " bind normal mode K to search word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" bind visual mode K to grep selected text
-vnoremap K y:Ag! <C-R>"
 " bind visual mode // to search current file for selected text
 vnoremap // y/<C-R>"<CR>
 
@@ -117,13 +118,14 @@ nmap , <Plug>(easymotion-bd-w)
 :nnoremap <silent><Leader>c <C-w><C-]><C-w>T
 
 " vim rspec
-
 autocmd Filetype ruby nnoremap <Leader>s :call RunNearestSpec()<CR>
 autocmd Filetype ruby nnoremap <Leader>f  :call RunCurrentSpecFile()<CR>
 
 " Zenburn colorscheme
 let g:zenburn_transparent = 1
 colorscheme zenburn
+hi QuickFixLine term=reverse guibg=Cyan ctermbg=52
+
 
 set nocompatible
 if has("autocmd")
@@ -135,9 +137,19 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" NerdTree 
+" NerdTree
 " open NERDTree automatically when vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_mode_map = { 'mode': 'passive' }
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
