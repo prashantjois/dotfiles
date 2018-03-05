@@ -68,8 +68,8 @@ map q: :q
 inoremap jk <ESC>
 " Type <Space>w to save file
 nnoremap <Leader>w :w<CR>
-" Type <Space>q to quit
-nnoremap <Leader>q :q<CR>
+" Type <Space>q to close buffer
+nnoremap <Leader>q :bd<CR>
 
 " Automatically jump to end of text you pasted
 vnoremap <silent> y y`]
@@ -85,7 +85,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Buffer shortcuts
 nnoremap t :bn<CR>
-nnoremap T :tp<CR>
+nnoremap T :bp<CR>
 
 " Select word easily
 nnoremap vv viw
