@@ -8,7 +8,8 @@ git clone https://github.com/prashantjois/dotfiles ~/.dotfiles && ~/.dotfiles/se
 
 ## Pre-requisites
 
-  * git
+It goes without saying that you need git, to at least clone the repo. 
+
   * curl
   * vim
   * tmux
