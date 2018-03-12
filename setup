@@ -17,16 +17,17 @@ function main() {
     neovim)
       setup_neovim
       ;;
-    misc)
-      setup_misc
-      ;;
     *)
-      # note: neovim is deliberately not setup
-      setup_vim
-      setup_bash
-      setup_git
-      setup_tmux
-      setup_misc
+      if [ "$1" == "" ] ; then
+        # note: neovim is deliberately not setup
+        setup_vim
+        setup_bash
+        setup_git
+        setup_tmux
+      else
+        echo "Unrecognized option $1"
+        exit 1
+      fi
       ;;
   esac
 }
@@ -63,6 +64,7 @@ function setup_bash() {
   if [ $? -eq 1 ] ; then
     echo "source ~/.bash_local" >> "$HOME/.bashrc"
   fi
+  link "bash/.inputrc" "$HOME/.inputrc"
   announce_complete "Bash"
 }
 
@@ -101,15 +103,6 @@ function setup_tmux() {
   announce_start "Tmux"
   link "tmux/.tmux.conf" "$HOME/.tmux.conf"
   announce_complete "Tmux"
-}
-
-#
-# MISC SETUP
-#
-function setup_misc() {
-  announce_start "Misc"
-  link "misc/.inputrc" "$HOME/.inputrc"
-  announce_complete "Misc"
 }
 
 #
@@ -175,7 +168,6 @@ function link() {
 
   prompt_overwrite "$_destination"
   if [ $? -eq 0 ] ; then
-    echo "ln -s $_source_path $_destination"
     ln -s "$_source_path" "$_destination"
   fi
 }
