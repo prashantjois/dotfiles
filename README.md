@@ -20,5 +20,5 @@ If you pass no arguments to `setup` it will run all installation routines except
 To run an individual setup routine, pass it as an argument to the setup script:
 
 ```bash
-./setup vim`
+./setup vim
 ```
