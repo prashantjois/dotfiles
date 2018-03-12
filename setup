@@ -2,6 +2,9 @@
 
 function main() {
   case $1 in
+    prereqs)
+      install_prereqs
+      ;;
     vim)
       setup_vim
       ;;
@@ -30,6 +33,32 @@ function main() {
       fi
       ;;
   esac
+}
+
+#
+# PREREQ SETUP
+#
+function install_prereqs() {
+  announce_start "Pre-requisites"
+  if [ "$(uname)" == "Linux" ] ; then
+    if [ -f /etc/issue ] ; then
+      grep Ubuntu /etc/issue
+      if [ $? -eq 0 ] ; then
+        install_prereqs_ubuntu
+        return 0
+      fi
+    fi
+  fi
+
+  echo "Don't know how to install pre-reqs for your OS"
+  return 1
+
+  announce_complete "Pre-requisites"
+}
+
+function install_prereqs_ubuntu() {
+  sudo apt update &&
+  sudo apt install -y git vim curl
 }
 
 #

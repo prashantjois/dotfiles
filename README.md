@@ -3,8 +3,7 @@
 ## Quick Setup
 
 ```bash
-git clone https://github.com/prashantjois/dotfiles ~/.dotfiles
-~/.dotfiles/setup
+git clone https://github.com/prashantjois/dotfiles ~/.dotfiles && ~/.dotfiles/setup
 ```
 
 ## Pre-requisites
@@ -13,6 +12,12 @@ git clone https://github.com/prashantjois/dotfiles ~/.dotfiles
   * curl
   * vim
   * tmux
+
+To Install pre-reqs:
+
+```
+./setup prereqs
+```
 
 ## Detailed Setup
 
