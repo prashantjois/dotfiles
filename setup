@@ -57,8 +57,8 @@ function install_prereqs() {
 }
 
 function install_prereqs_ubuntu() {
-  sudo apt update &&
-  sudo apt install -y git vim curl
+  apt update &&
+  apt install -y git vim curl
 }
 
 #
