@@ -48,6 +48,9 @@ function install_prereqs() {
         return 0
       fi
     fi
+  elif [ "$(uname)" == "Darwin" ] ; then
+    install_prereqs_macos
+    return 0
   fi
 
   echo "Don't know how to install pre-reqs for your OS"
@@ -58,7 +61,11 @@ function install_prereqs() {
 
 function install_prereqs_ubuntu() {
   apt update &&
-  apt install -y git vim curl
+  apt install -y vim curl
+}
+
+function install_prereqs_macos() {
+  brew install vim curl
 }
 
 #
