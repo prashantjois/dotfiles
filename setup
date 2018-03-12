@@ -1,0 +1,218 @@
+#!/bin/bash
+
+function main() {
+  case $1 in
+    vim)
+      setup_vim
+      ;;
+    bash)
+      setup_bash
+      ;;
+    git)
+      setup_git
+      ;;
+    tmux)
+      setup_tmux
+      ;;
+    neovim)
+      setup_neovim
+      ;;
+    misc)
+      setup_misc
+      ;;
+    *)
+      # note: neovim is deliberately not setup
+      setup_vim
+      setup_bash
+      setup_git
+      setup_tmux
+      setup_misc
+      ;;
+  esac
+}
+
+#
+# VIM SETUP
+#
+function setup_vim() {
+  announce_start "Vim"
+  install_vim_plugged
+  link "vim/.vimrc" "$HOME/.vimrc"
+  install_vim_plugins
+  announce_complete "Vim"
+}
+
+function install_vim_plugged() {
+  # vim-plug: Simple plugin manager to download directly from github instead of saving all our plugins locally
+  if [ ! -f "$HOME/.vim/autoload/plug.vim" ] ; then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
+}
+
+function install_vim_plugins() {
+  vim -c ":PlugInstall" -c ":qa"
+}
+
+#
+# BASH SETUP
+#
+function setup_bash() {
+  announce_start "Bash"
+  link "bash/.bash_local" "$HOME/.bash_local"
+  grep -q "source ~/.bash_local" "$HOME/.bashrc"
+  if [ $? -eq 1 ] ; then
+    echo "source ~/.bash_local" >> "$HOME/.bashrc"
+  fi
+  announce_complete "Bash"
+}
+
+#
+# GIT SETUP
+#
+function setup_git() {
+  announce_start "Git"
+  link "git/.gitignore" "$HOME/.gitignore"
+  link "git/.gitconfig" "$HOME/.gitconfig"
+  setup_git_user
+  announce_complete "Git"
+}
+
+function setup_git_user() {
+  local _default_email="prashant@jois.ca"
+  local _gitconfig_local="$HOME/.gitconfig.local" 
+
+  prompt_overwrite "$_gitconfig_local"
+  if [ $? -eq 0 ] ; then
+    echo -n "What email address would you like to use (default: $_default_email)? " >&2
+    read _email
+    if [ "$_email" == "" ] ; then
+      _email="$_default_email"
+    fi
+    echo "[user]" > "$_gitconfig_local"
+    echo "  name = Prashant Jois" >> "$_gitconfig_local"
+    echo "  email = $_email" >> "$_gitconfig_local"
+  fi
+}
+
+#
+# TMUX SETUP
+#
+function setup_tmux() {
+  announce_start "Tmux"
+  link "tmux/.tmux.conf" "$HOME/.tmux.conf"
+  announce_complete "Tmux"
+}
+
+#
+# MISC SETUP
+#
+function setup_misc() {
+  announce_start "Misc"
+  link "misc/.inputrc" "$HOME/.inputrc"
+  announce_complete "Misc"
+}
+
+#
+# NEOVIM SETUP
+#
+function setup_neovim() {
+  install_neovim_if_required
+  if [ $? -eq 0 ] ; then
+    install_vim_plugged
+    link "vim/init.vim" "$HOME/.config/nvim/init.vim"
+  fi
+}
+
+function install_neovim_if_required() {
+  (nvim -h 2>&1) > /dev/null
+  if [ $? -ne 0 ] ; then
+    # nvim is not already installed
+    echo -n "Neovim not found, install? (y/n) " >&2
+    read _answer
+    if [ "$_answer" == "y" ] || [ "$_answer" == "Y" ] ; then
+      install_neovim
+      return $?
+    else
+      return 1
+    fi
+  fi
+  return 1
+}
+
+function install_neovim() {
+  if [ "$(uname)" == "Linux" ] ; then
+    if [ -f /etc/issue ] ; then
+      grep Ubuntu /etc/issue
+      if [ $? -eq 0 ] ; then
+        install_neovim_ubuntu
+        return 0
+      fi
+    fi
+  fi
+
+  echo "Don't know how to install neovim for your OS"
+  return 1
+}
+
+function install_neovim_ubuntu() {
+  apt-get update
+  apt-get install -y software-properties-common python3-software-properties python3-dev python3-pip
+  add-apt-repository ppa:neovim-ppa/unstable
+  apt-get update
+  apt-get install -y neovim
+  pip3 install --upgrade pip
+  pip3 install --user neovim
+}
+
+#
+# HELPER FUNCTIONS
+#
+
+function link() {
+  local _source="$1"
+  local _destination="$2"
+  local _source_path=$(abs_path "$_source")
+
+  prompt_overwrite "$_destination"
+  if [ $? -eq 0 ] ; then
+    echo "ln -s $_source_path $_destination"
+    ln -s "$_source_path" "$_destination"
+  fi
+}
+
+function abs_path() {
+  local _relpath="$1"
+  local _root_folder=$(dirname $(realpath "$0"))
+  echo "$_root_folder/$_relpath"
+}
+
+function prompt_overwrite() {
+  local _file="$1"
+
+  if [ -e "$_file" ] ; then
+    echo -n "'$_file' already exists, overwrite? (y/n) " >&2
+    read _answer
+    if [ "$_answer" == "y" ] || [ "$_answer" == "Y" ] ; then
+      rm -rf "$_file"
+      # 0 indicates success as per convention
+      return 0
+    else
+      return 1
+    fi
+  else
+    return 0
+  fi
+}
+
+function announce_start() {
+  local _app="$1"
+  echo
+  echo "* * * * SETTING UP $_app * * * * "
+}
+
+function announce_complete() {
+  local _app="$1"
+  echo "* * * * $_app SETUP COMPLETE * * * * "
+}
+
+main $*

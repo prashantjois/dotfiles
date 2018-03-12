@@ -1,0 +1,69 @@
+[github]
+	user = prashantjois
+[credential]
+	helper = osxkeychain
+[hub]
+	protocol = https
+[core]
+	pager = less -FRSX
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	editor = vim -f
+	autocrlf = input
+	safecrlf = true
+	excludesfile = ~/.gitignore
+[push]
+	config = default
+	default = tracking
+[rebase]
+	autosquash = true
+[merge]
+	summary = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+[color "branch"]
+	current = yellow reverse
+	local   = yellow
+	remote  = green
+[color "diff"]
+	meta = blue
+	frag = magenta
+	old  = red
+	new  = green
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = red
+[alias]
+	a       = add -u
+	aa      = add --all :/
+	ap      = add -u -p
+	b       = browse
+	bam     = "!source ~/.githelpers && delete_local_merged_branches"
+	bamr    = "!source ~/.githelpers && delete_remote_merged_branches"
+	c       = commit -v
+	co      = checkout
+	d       = diff
+	ds      = diff --staged
+	dw      = diff --color-words
+	po      = push origin head
+	pr      = "!f() { git fetch origin refs/pull/$1/head:pr/$1 && git co pr/$1; } ; f"
+	s       = status -s -b
+	sc      = diff --name-only --diff-filter=U
+	sm      = submodule
+	smu     = submodule foreach git pull origin master
+	summary = "!source ~/.githelpers && weekly_summary"
+	td      = merge --no-ff
+	up      = "!git fetch upstream && git rebase upstream/master"
+	w       = whatchanged --decorate
+	wp      = whatchanged --decorate -p
+	wtf     = "!git fetch --multiple production origin && git log production/master..origin/master"
+	l = log --pretty='format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar' --date=short
+	find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+	show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
+[include]
+  path=~/.gitconfig.local
