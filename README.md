@@ -7,7 +7,14 @@ git clone https://github.com/prashantjois/dotfiles ~/.dotfiles
 ~/.dotfiles/setup
 ```
 
-## Details
+## Pre-requisites
+
+  * git
+  * curl
+  * vim
+  * tmux
+
+## Detailed Setup
 
 This setup includes configuration for the following apps:
   * vim / neovim
