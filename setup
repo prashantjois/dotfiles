@@ -101,6 +101,7 @@ function setup_bash() {
     echo "source ~/.bash_local" >> "$HOME/.bashrc"
   fi
   link "bash/.inputrc" "$HOME/.inputrc"
+  source "$HOME/.bashrc"
   announce_complete "Bash"
 }
 
