@@ -17,6 +17,9 @@ function main() {
     tmux)
       setup_tmux
       ;;
+    ctags)
+      setup_ctags
+      ;;
     neovim)
       setup_neovim
       ;;
@@ -61,11 +64,11 @@ function install_prereqs() {
 
 function install_prereqs_ubuntu() {
   apt update &&
-  apt install -y vim curl
+  apt install -y vim curl exuberant-ctags
 }
 
 function install_prereqs_macos() {
-  brew install vim curl
+  brew install vim curl ctags
 }
 
 #
@@ -140,6 +143,15 @@ function setup_tmux() {
   announce_start "Tmux"
   link "tmux/.tmux.conf" "$HOME/.tmux.conf"
   announce_complete "Tmux"
+}
+
+#
+# CTAGS SETUP
+#
+function setup_ctags() {
+  announce_start "ctags"
+  link "ctags/.ctags" "$HOME/.ctags"
+  announce_complete "ctags"
 }
 
 #
