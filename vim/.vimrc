@@ -21,7 +21,8 @@ Plug 'terryma/vim-expand-region' " Visually select regions
 Plug 'jgdavey/tslime.vim'        " Tmux integration
 Plug 'ervandew/supertab'         " Auto-completion with tab
 Plug 'vim-syntastic/syntastic'   " Linter
-Plug 'prashantjois/vim-slack'    " Post to slack directly from vim
+Plug '~/Development/vim-slack'
+" Plug 'prashantjois/vim-slack'    " Post to slack directly from vim
 
 " Colourschemes
 Plug 'jnurmine/Zenburn'
@@ -41,7 +42,7 @@ if has('mouse')
   set mouse-=a                  " allow mouse movements if available (gvim or such)
 endif
 set re=1                        " This fixes the problem with slowness in ruby syntax highlighting
-set number                      " Show line numbers
+set relativenumber              " display how far away each line is from the current one, instead of showing the absolute line number.
 set showcmd                     " show incomplete commands
 set scrolloff=5                 " lines to keep when scrolling
 set wrap                        " wrap text when displaying (does not alter the line)
@@ -49,6 +50,8 @@ set showmatch                   " show matching parentheses
 set undofile                    " preserve undo on exit
 set clipboard=unnamed           " allow yank and paste from clipboard if available
 set hidden                      " allow switching buffers without save
+set relativenumber              " display how far away each line is from the current one, instead of showing the absolute line number.
+set visualbell                  " don't beep just flash the screen
 set expandtab                   " (insert) insert space whenever a tab key is pressed
 set tabstop=2                   " (insert) number of spaces in a tab
 set shiftwidth=2                " (insert) number of spaces characters used for indentation
@@ -95,7 +98,7 @@ nnoremap T :bp<CR>
 nnoremap vv viw
 
 " Search and replace visually selected text
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
 
 " Create a new file in cwd instead of at root of vim process
 nnoremap <C-T> :e %:h/
@@ -128,7 +131,7 @@ if executable('ag')
   " Use ag in CtrlP and Ack for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s ' . ag_options
   " quick search prompt
-  nnoremap <Leader>g :Ag!
+  nnoremap <Leader>g :Ag! 
   
   " bind visual mode <leader>g to grep selected text
   vnoremap <Leader>g y:Ag! <C-R>"
