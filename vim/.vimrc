@@ -91,8 +91,8 @@ nnoremap <silent> p p`]
 vnoremap . :normal .<CR>
 
 " Buffer shortcuts
-nnoremap t :bn<CR>
-nnoremap T :bp<CR>
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
 
 " Select word easily
 nnoremap vv viw
