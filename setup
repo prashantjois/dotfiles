@@ -77,7 +77,7 @@ function install_prereqs_macos() {
 function setup_vim() {
   announce_start "Vim"
   install_vim_plugged
-  link "vim/.vimrc" "$HOME/.vimrc"
+  copy "vim/.vimrc" "$HOME/.vimrc"
   install_vim_plugins
   announce_complete "Vim"
 }
@@ -98,12 +98,12 @@ function install_vim_plugins() {
 #
 function setup_bash() {
   announce_start "Bash"
-  link "bash/.bash_local" "$HOME/.bash_local"
+  copy "bash/.bash_local" "$HOME/.bash_local"
   grep -q "source ~/.bash_local" "$HOME/.bashrc"
   if [ $? -eq 1 ] ; then
     echo "source ~/.bash_local" >> "$HOME/.bashrc"
   fi
-  link "bash/.inputrc" "$HOME/.inputrc"
+  copy "bash/.inputrc" "$HOME/.inputrc"
   source "$HOME/.bashrc"
   announce_complete "Bash"
 }
@@ -113,8 +113,8 @@ function setup_bash() {
 #
 function setup_git() {
   announce_start "Git"
-  link "git/.gitignore" "$HOME/.gitignore"
-  link "git/.gitconfig" "$HOME/.gitconfig"
+  copy "git/.gitignore" "$HOME/.gitignore"
+  copy "git/.gitconfig" "$HOME/.gitconfig"
   setup_git_user
   announce_complete "Git"
 }
@@ -141,7 +141,7 @@ function setup_git_user() {
 #
 function setup_tmux() {
   announce_start "Tmux"
-  link "tmux/.tmux.conf" "$HOME/.tmux.conf"
+  copy "tmux/.tmux.conf" "$HOME/.tmux.conf"
   announce_complete "Tmux"
 }
 
@@ -150,7 +150,7 @@ function setup_tmux() {
 #
 function setup_ctags() {
   announce_start "ctags"
-  link "ctags/.ctags" "$HOME/.ctags"
+  copy "ctags/.ctags" "$HOME/.ctags"
   announce_complete "ctags"
 }
 
@@ -161,7 +161,7 @@ function setup_neovim() {
   install_neovim_if_required
   if [ $? -eq 0 ] ; then
     install_vim_plugged
-    link "vim/init.vim" "$HOME/.config/nvim/init.vim"
+    copy "vim/init.vim" "$HOME/.config/nvim/init.vim"
   fi
 }
 
@@ -210,14 +210,14 @@ function install_neovim_ubuntu() {
 # HELPER FUNCTIONS
 #
 
-function link() {
+function copy() {
   local _source="$1"
   local _destination="$2"
   local _source_path=$(abs_path "$_source")
 
   prompt_overwrite "$_destination"
   if [ $? -eq 0 ] ; then
-    ln -s "$_source_path" "$_destination"
+    cp -f "$_source_path" "$_destination"
   fi
 }
 
