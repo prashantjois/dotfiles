@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'kien/ctrlp.vim'            " Fuzzy file search
+Plug 'ctrlpvim/ctrlp.vim'        " Fuzzy file search
 Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
 Plug 'tomtom/tcomment_vim'       " Comment shortchuts
 Plug 'airblade/vim-gitgutter'    " Shows git commentary on the side
