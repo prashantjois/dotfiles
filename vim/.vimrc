@@ -138,7 +138,13 @@ if executable('ag')
 endif
 
 " bind normal mode K to search word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw
+
+" bind visual mode K to search selection in all files
+vnoremap K y:Ag! "<C-R>"
+
+" bind visual mode // to search current file for selected text
+vnoremap // y/<C-R>"<CR>
 
 " bind visual mode // to search current file for selected text
 vnoremap // y/<C-R>"<CR>
