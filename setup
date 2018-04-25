@@ -103,7 +103,6 @@ function setup_bash() {
   if [ $? -eq 1 ] ; then
     echo "source ~/.bash_local" >> "$HOME/.bashrc"
   fi
-  copy "bash/.inputrc" "$HOME/.inputrc"
   source "$HOME/.bashrc"
   announce_complete "Bash"
 }
