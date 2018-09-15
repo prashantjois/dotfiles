@@ -78,6 +78,7 @@ function setup_vim() {
   announce_start "Vim"
   install_vim_plugged
   copy "vim/.vimrc" "$HOME/.vimrc"
+  copy "vim/.ideavimrc" "$HOME/.ideavimrc"
   install_vim_plugins
   announce_complete "Vim"
 }
