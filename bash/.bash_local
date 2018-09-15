@@ -32,7 +32,6 @@ de() {
     docker exec -ti $* bash
 }
 
-
 # git aliases
 alias gs='git status'
 alias gd='git diff'
@@ -45,6 +44,7 @@ alias gp='git push origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gr='git pull origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gf='git fetch -a'
 alias gco='git checkout'
+alias gclean="git branch --merged | grep -v '^*' | grep -v '^  master$' | xargs git branch -d"
 
 # rails 
 alias s='rails s -b 0.0.0.0'
@@ -117,4 +117,3 @@ function merge() {
     while read line; do str="$str $line"; done
     echo $str
 }
-
