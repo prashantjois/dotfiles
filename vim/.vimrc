@@ -1,38 +1,39 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'ctrlpvim/ctrlp.vim'        " Fuzzy file search
-Plug 'easymotion/vim-easymotion' " Allows you to quickly move to different parts of the file
-Plug 'tomtom/tcomment_vim'       " Comment shortchuts
-Plug 'airblade/vim-gitgutter'    " Shows git commentary on the side
-Plug 'sheerun/vim-polyglot'      " Language packs
-Plug 'vim-scripts/ruby-matchit'  " Linter
-Plug 'ngmy/vim-rubocop'          " Auto-complete 'end'
-Plug 'tpope/vim-endwise'         " intelligently add 'end'
-Plug 'tmhedberg/matchit'         " Advanced bracket matching
-Plug 'brookhong/ag.vim'          " Use silver-searcher 
-Plug 'MarcWeber/vim-addon-mw-utils' " Snippets (next 3 plugins)
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'        " Snippets are separated from the engine
-Plug 'danro/rename.vim'          " Rename files within cwd
-Plug 'scrooloose/nerdtree'       " directory navigation
-Plug 'vim-airline/vim-airline'   " Better statusline
-Plug 'terryma/vim-expand-region' " Visually select regions
-Plug 'jgdavey/tslime.vim'        " Tmux integration
-Plug 'ervandew/supertab'         " Auto-completion with tab
-Plug 'vim-syntastic/syntastic'   " Linter
-Plug '~/Development/vim-slack'
-" Plug 'prashantjois/vim-slack'    " Post to slack directly from vim
+Plug 'ctrlpvim/ctrlp.vim'           " Fuzzy file search
+Plug 'easymotion/vim-easymotion'    " Allows you to quickly move to different parts of the file
+Plug 'tomtom/tcomment_vim'          " Comment shortchuts
+Plug 'airblade/vim-gitgutter'       " Shows git commentary on the side
+Plug 'sheerun/vim-polyglot'         " Language packs (sensible defaults for a ton of languages)
+Plug 'vim-scripts/ruby-matchit'     " Jump to block end in ruby
+Plug 'ngmy/vim-rubocop'             " Auto-complete 'end'
+Plug 'tmhedberg/matchit'            " Advanced bracket matching
+Plug 'brookhong/ag.vim'             " Use silver-searcher 
+Plug 'MarcWeber/vim-addon-mw-utils' " (snippets dependency)
+Plug 'tomtom/tlib_vim'              " (snippets dependency)
+Plug 'garbas/vim-snipmate'          " Snippets engline
+Plug 'honza/vim-snippets'           " Actual snippets of text used by snipmate
+Plug 'danro/rename.vim'             " Rename files within cwd
+Plug 'scrooloose/nerdtree'          " directory navigation
+Plug 'vim-airline/vim-airline'      " Better statusline
+Plug 'terryma/vim-expand-region'    " Visually select regions
+Plug 'jgdavey/tslime.vim'           " Tmux integration
+Plug 'ervandew/supertab'            " Auto-completion with tab
+Plug 'vim-syntastic/syntastic'      " Linter integration
+Plug 'prashantjois/vim-slack'       " Post to slack directly from vim
+Plug 'tpope/vim-endwise'            " intelligently add 'end'
+Plug 'tpope/vim-abolish'            " Intellignet search and sub
+Plug 'tpope/vim-fugitive'           " Git integration
 
 " Colourschemes
 Plug 'jnurmine/Zenburn'
 
 " Syntax highlighting
-Plug 'slim-template/vim-slim'    " Rails Slim template
-Plug 'kchmck/vim-coffee-script'  " Coffeescript
-Plug 'othree/html5.vim'          " HTML
+Plug 'slim-template/vim-slim'           " Slim template (rails)
+Plug 'kchmck/vim-coffee-script'         " Coffeescript
+Plug 'othree/html5.vim'                 " HTML
 Plug 'mustache/vim-mustache-handlebars' " Handlebars (ember.js)
-Plug 'jelera/vim-javascript-syntax' " Javascript
+Plug 'jelera/vim-javascript-syntax'     " Javascript
 
 call plug#end()
 
