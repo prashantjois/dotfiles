@@ -1,0 +1,51 @@
+filetype plugin indent on       " indentation based on file type
+set relativenumber              " display how far away each line is from the current one, instead of showing the absolute line number.
+set showcmd                     " show incomplete commands
+set scrolloff=5                 " lines to keep when scrolling
+set wrap                        " wrap text when displaying (does not alter the line)
+set showmatch                   " show matching parentheses
+set clipboard=unnamed           " allow yank and paste from clipboard if available
+set hidden                      " allow switching buffers without save
+set relativenumber              " display how far away each line is from the current one, instead of showing the absolute line number.
+set visualbell                  " don't beep just flash the screen
+set expandtab                   " (insert) insert space whenever a tab key is pressed
+set autoindent                  " (insert) copy indent from current line when going to next line
+set smartindent                 " (insert) smart autoindenting when starting a new line
+set nocindent                   " (insert) do not use cindent indenting mode
+set backspace=indent,eol,start  " (insert) make backspace work like in most programs
+set hlsearch                    " (normal) highlight search terms
+set incsearch                   " (normal) show found search term as you type (emacs style)
+set ignorecase                  " (normal) case-insensitve search
+set smartcase                   " (normal) make searches case-insensitive except when you include upper-case characters
+set pastetoggle=<F2>            " (normal) when pasting ignore auto indentation rules"
+set wildmenu                    " (normal) menu autocomplete
+let mapleader = "\<Space>"      " (normal) map leader to space bar
+
+" Stop that stupid window from popping up
+map q: :q
+
+" jk to escape into normal mode
+inoremap jk <ESC>
+
+" Type <Space>w to save file
+nnoremap <Leader>w :w<CR>
+
+" Type <Space>q to close window
+nnoremap <Leader>q <c-w>
+
+" Automatically jump to end of text you pasted
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
+" allow the . to execute once for each line of a visual selection
+vnoremap . :normal .<CR>
+
+" Buffer shortcuts
+nnoremap <Tab> <C-Tab>
+
+" Select word easily
+nnoremap vv viw
+
+" Search and replace visually selected text
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
