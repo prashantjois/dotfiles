@@ -83,6 +83,12 @@ nnoremap <Leader>q :bd<CR>
 " Type <Space>Q to quit
 nnoremap <Leader>Q :q<CR>
 
+" Type <Space>' to yank within quotes
+nnoremap <Leader>' yi'
+
+" Type <Space>" to yank within double quotes
+nnoremap <Leader>" yi"
+
 " Automatically jump to end of text you pasted
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
@@ -139,7 +145,7 @@ if executable('ag')
 endif
 
 " bind normal mode K to search word under cursor
-nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw
+nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind visual mode K to search selection in all files
 vnoremap K y:Ag! "<C-R>""
