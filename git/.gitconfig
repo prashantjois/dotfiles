@@ -11,6 +11,8 @@
 	autocrlf = input
 	safecrlf = true
 	excludesfile = ~/.gitignore
+[diff]
+  noprefix = true
 [push]
 	config = default
 	default = tracking
