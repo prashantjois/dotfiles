@@ -170,6 +170,7 @@ hi QuickFixLine term=reverse guibg=Cyan ctermbg=52
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:snipMate = { 'snippet_version' : 1 }
 
 " NerdTree
 " open NERDTree automatically when vim starts up on opening a directory
