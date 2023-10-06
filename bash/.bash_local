@@ -44,11 +44,58 @@ alias gp='git push origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gr='git pull origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gf='git fetch -a'
 alias gco='git checkout'
-alias gcl="git branch --merged | grep -v '^*' | grep -v '^  master$' | xargs git branch -d"
 alias gg='git grep'
 alias gca='git commit --amend --no-edit'
 alias gro='git rebase -Xours'
 alias grom='git rebase origin/master'
+alias gbclean=
+
+# removes all local branches without a remote-tracking branch
+function gcl() {
+    # Fetch the latest data from the remote repository and prune deleted remote branches
+    git fetch --prune
+
+    # Array to hold branches to be deleted
+    declare -a branches_to_delete=()
+
+    # Loop through each local branch
+    for branch in $(git for-each-ref --format '%(refname:short)' refs/heads 2>&1); do
+        # Exclude master and main branches
+        if [[ "$branch" != "master" && "$branch" != "main" ]]; then
+            # Check if the branch has a remote-tracking branch
+            git rev-parse --verify --quiet "$branch"@{u} 2>/dev/null 1>/dev/null
+
+            if [[ $? -ne 0 ]]; then
+                # No remote-tracking branch, add to candidates list
+                branches_to_delete+=("$branch")
+            fi
+        fi
+    done
+
+    # Check if there are any branches to delete
+    if [[ ${#branches_to_delete[@]} -eq 0 ]]; then
+        echo "No branches to delete."
+        exit 0
+    fi
+
+    # List branches to be deleted and prompt for confirmation
+    echo "The following branches are candidates for deletion:"
+    for branch in "${branches_to_delete[@]}"; do
+        echo "  $branch"
+    done
+
+    # Prompt for confirmation
+    read -p "Do you want to delete these branches? (y/n): " response
+    if [[ "$response" == "y" || "$response" == "Y" ]]; then
+        for branch in "${branches_to_delete[@]}"; do
+            git branch -D "$branch"
+        done
+        echo "Branches deleted."
+    else
+        echo "Operation cancelled. No branches were deleted."
+    fi
+}
+
 
 # rails 
 alias s='rails s -b 0.0.0.0'
@@ -67,53 +114,53 @@ backt() {
 }
 
 extract () {
-     if [ -f $1 ] ; then
-         case $1 in
-             *.tar.bz2)   tar xjf $1        ;;
-             *.tar.gz)    tar xzf $1     ;;
-             *.bz2)       bunzip2 $1       ;;
-             *.rar)       rar x $1     ;;
-             *.gz)        gunzip $1     ;;
-             *.tar)       tar xf $1        ;;
-             *.tbz2)      tar xjf $1      ;;
-             *.tgz)       tar xzf $1       ;;
-             *.zip)       unzip $1     ;;
-             *.Z)         uncompress $1  ;;
-             *.7z)        7z x $1    ;;
-             *)           echo "'$1' cannot be extracted via extract()" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1        ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1       ;;
+            *.rar)       rar x $1     ;;
+            *.gz)        gunzip $1     ;;
+            *.tar)       tar xf $1        ;;
+            *.tbz2)      tar xjf $1      ;;
+            *.tgz)       tar xzf $1       ;;
+            *.zip)       unzip $1     ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1    ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
 
 up() {
-     local _levels=$1
-     if [ ! -z "$_levels" ] && [ $_levels -gt 0 ] && [ $_levels -lt 1000 ]
-     then
-          local _cmd=".."
-          for (( i=1 ; i<$_levels ; i++ ))
-          do
-               _cmd="$_cmd/.."
-          done
-          cd $_cmd
-     fi
+    local _levels=$1
+    if [ ! -z "$_levels" ] && [ $_levels -gt 0 ] && [ $_levels -lt 1000 ]
+    then
+        local _cmd=".."
+        for (( i=1 ; i<$_levels ; i++ ))
+        do
+            _cmd="$_cmd/.."
+        done
+        cd $_cmd
+    fi
 }
 
 # Creates an archive (*.tar.gz) from given directory.
 function maketgz() { 
-     if [ ! -z "$1" ]
-     then
-          tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
-     fi
+    if [ ! -z "$1" ]
+    then
+        tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
+    fi
 }
 
 # Create a ZIP archive of a file or folder.
 function makezip() { 
-     if [ ! -z "$1" ]
-     then
-          zip -r "${1%%/}.zip" "$1" ; 
-     fi
+    if [ ! -z "$1" ]
+    then
+        zip -r "${1%%/}.zip" "$1" ; 
+    fi
 }
 
 function merge() { 
