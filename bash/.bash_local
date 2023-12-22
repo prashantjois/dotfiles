@@ -163,6 +163,7 @@ function ht() {
 # Formats SQL
 # If a filename is given as the first argument, then formats that file
 # If no filename is given, a temporary file is created for pasting your SQL to format
+# Requires "sqlformat", install by running "pip3 install sqlformat"
 function fsql() {
   local _file="$1"
 
