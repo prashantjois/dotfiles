@@ -4,12 +4,27 @@ export TERM=xterm-256color
 export EDITOR=vim
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
-export HISTFILESIZE=
-export HISTSIZE=
-export HISTTIMEFORMAT="[%F %T] "
-# Change the file location because certain bash sessions truncate .bash_history file upon close.
-# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
-export HISTFILE=~/.bash_eternal_history
+HISTSIZE=5000               #How many lines of history to keep in memory
+HISTFILE=~/.zsh_history     #Where to save history to disk
+SAVEHIST=500000000          #Number of history entries to save to disk
+HISTDUP=erase               #Erase duplicates in the history file
+setopt APPENDHISTORY     # Append history to the history file (no overwriting)
+setopt SHAREHISTORY      # Share history across terminals
+setopt    incappendhistory  # Immediately append to the history file, not just when a term is killed
+
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 alias which='type -a'
 alias g='grep -ERI'
@@ -44,58 +59,12 @@ alias gp='git push origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gr='git pull origin `git status 2>&1 | head -n 1 | sed s"/On branch //g"`'
 alias gf='git fetch -a'
 alias gco='git checkout'
+alias gcl="git branch --merged | grep -v '^*' | grep -v '^  master$' | xargs git branch -d"
 alias gg='git grep'
 alias gca='git commit --amend --no-edit'
 alias gro='git rebase -Xours'
-alias grom='git rebase origin/master'
-alias gbclean=
-
-# removes all local branches without a remote-tracking branch
-function gcl() {
-    # Fetch the latest data from the remote repository and prune deleted remote branches
-    git fetch --prune
-
-    # Array to hold branches to be deleted
-    declare -a branches_to_delete=()
-
-    # Loop through each local branch
-    for branch in $(git for-each-ref --format '%(refname:short)' refs/heads 2>&1); do
-        # Exclude master and main branches
-        if [[ "$branch" != "master" && "$branch" != "main" ]]; then
-            # Check if the branch has a remote-tracking branch
-            git rev-parse --verify --quiet "$branch"@{u} 2>/dev/null 1>/dev/null
-
-            if [[ $? -ne 0 ]]; then
-                # No remote-tracking branch, add to candidates list
-                branches_to_delete+=("$branch")
-            fi
-        fi
-    done
-
-    # Check if there are any branches to delete
-    if [[ ${#branches_to_delete[@]} -eq 0 ]]; then
-        echo "No branches to delete."
-        exit 0
-    fi
-
-    # List branches to be deleted and prompt for confirmation
-    echo "The following branches are candidates for deletion:"
-    for branch in "${branches_to_delete[@]}"; do
-        echo "  $branch"
-    done
-
-    # Prompt for confirmation
-    read -p "Do you want to delete these branches? (y/n): " response
-    if [[ "$response" == "y" || "$response" == "Y" ]]; then
-        for branch in "${branches_to_delete[@]}"; do
-            git branch -D "$branch"
-        done
-        echo "Branches deleted."
-    else
-        echo "Operation cancelled. No branches were deleted."
-    fi
-}
-
+alias grom='git rebase origin/main'
+alias gpr='gh pr create --web'
 
 # rails 
 alias s='rails s -b 0.0.0.0'
@@ -114,53 +83,53 @@ backt() {
 }
 
 extract () {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xjf $1        ;;
-            *.tar.gz)    tar xzf $1     ;;
-            *.bz2)       bunzip2 $1       ;;
-            *.rar)       rar x $1     ;;
-            *.gz)        gunzip $1     ;;
-            *.tar)       tar xf $1        ;;
-            *.tbz2)      tar xjf $1      ;;
-            *.tgz)       tar xzf $1       ;;
-            *.zip)       unzip $1     ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1    ;;
-            *)           echo "'$1' cannot be extracted via extract()" ;;
-        esac
-    else
-        echo "'$1' is not a valid file"
-    fi
+     if [ -f $1 ] ; then
+         case $1 in
+             *.tar.bz2)   tar xjf $1        ;;
+             *.tar.gz)    tar xzf $1     ;;
+             *.bz2)       bunzip2 $1       ;;
+             *.rar)       rar x $1     ;;
+             *.gz)        gunzip $1     ;;
+             *.tar)       tar xf $1        ;;
+             *.tbz2)      tar xjf $1      ;;
+             *.tgz)       tar xzf $1       ;;
+             *.zip)       unzip $1     ;;
+             *.Z)         uncompress $1  ;;
+             *.7z)        7z x $1    ;;
+             *)           echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
 }
 
 up() {
-    local _levels=$1
-    if [ ! -z "$_levels" ] && [ $_levels -gt 0 ] && [ $_levels -lt 1000 ]
-    then
-        local _cmd=".."
-        for (( i=1 ; i<$_levels ; i++ ))
-        do
-            _cmd="$_cmd/.."
-        done
-        cd $_cmd
-    fi
+     local _levels=$1
+     if [ ! -z "$_levels" ] && [ $_levels -gt 0 ] && [ $_levels -lt 1000 ]
+     then
+          local _cmd=".."
+          for (( i=1 ; i<$_levels ; i++ ))
+          do
+               _cmd="$_cmd/.."
+          done
+          cd $_cmd
+     fi
 }
 
 # Creates an archive (*.tar.gz) from given directory.
 function maketgz() { 
-    if [ ! -z "$1" ]
-    then
-        tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
-    fi
+     if [ ! -z "$1" ]
+     then
+          tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
+     fi
 }
 
 # Create a ZIP archive of a file or folder.
 function makezip() { 
-    if [ ! -z "$1" ]
-    then
-        zip -r "${1%%/}.zip" "$1" ; 
-    fi
+     if [ ! -z "$1" ]
+     then
+          zip -r "${1%%/}.zip" "$1" ; 
+     fi
 }
 
 function merge() { 
@@ -168,3 +137,55 @@ function merge() {
     while read line; do str="$str $line"; done
     echo $str
 }
+
+
+# Function to convert epoch timestamp to human-readable format (ht = human time)
+function ht() {
+    local timestamp="$1"
+    if [ -z "$timestamp" ]; then
+        echo "Usage: $0 <epoch_timestamp>"
+        exit 1
+    fi
+    
+    # Check if the timestamp is in milliseconds
+    if (( $timestamp >= 1000000000000 )); then
+        # Convert milliseconds to seconds
+        timestamp=$(($1 / 1000))
+    fi
+
+    # Convert epoch timestamp to human-readable format
+    human_readable_timestamp=$(date -r $timestamp) || exit 1
+
+    echo "$1 => $human_readable_timestamp"
+}
+
+
+# Formats SQL
+# If a filename is given as the first argument, then formats that file
+# If no filename is given, a temporary file is created for pasting your SQL to format
+function fsql() {
+  local _file="$1"
+
+  if [ -n "$_file" ]; then
+    # If a file name is provided as an argument
+    if [ ! -f "$_file" ]; then
+      echo "Error: File '$_file' does not exist."
+      return 1
+    fi
+  else
+    # If no file name is provided, create a temporary file
+    _file=$(mktemp /tmp/sqlfile.XXXXXX.sql)
+    trap "rm -f $_file" EXIT  # Ensure temporary file is deleted on exit
+
+    # Open the temporary file with the system editor
+    $EDITOR "$_file"
+    if [ $? -ne 0 ]; then
+      echo "Error: Unable to open editor. Aborting."
+      return 1
+    fi
+  fi
+
+  sqlformat "$_file" --reindent --keywords upper
+}
+
+fsql test.sql
