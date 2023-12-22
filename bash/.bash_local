@@ -187,5 +187,3 @@ function fsql() {
 
   sqlformat "$_file" --reindent --keywords upper
 }
-
-fsql test.sql
