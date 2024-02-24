@@ -49,3 +49,8 @@ nnoremap vv viw
 
 " Search and replace visually selected text
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
+
+" Eeasymotion - install the IdeaVim-EasyMotion plugin
+" Use comma in normal mode to perform bi-directional search
+set easymotion
+nmap , <Plug>(easymotion-bd-w)
